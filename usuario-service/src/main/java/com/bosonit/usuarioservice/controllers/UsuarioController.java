@@ -2,6 +2,8 @@ package com.bosonit.usuarioservice.controllers;
 
 import com.bosonit.usuarioservice.application.services.UsuarioServiceImp;
 import com.bosonit.usuarioservice.domain.entities.Usuario;
+import com.bosonit.usuarioservice.models.Carro;
+import com.bosonit.usuarioservice.models.Moto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioServiceImp usuarioService;
-
 
     @PostMapping
     public ResponseEntity<Usuario> saveUsuario(@RequestBody Usuario usuario){
@@ -41,5 +42,26 @@ public class UsuarioController {
             return  ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(usuario);
+    }
+    /*-----------------------------------------------------------------------*/
+    //RestTemplate
+    @GetMapping("/carros/{idUsuario}")
+    public ResponseEntity<List<Carro>> getCarros(@PathVariable("idUsuario") int idUsuario){
+        Usuario usuario = usuarioService.getUsuarioById(idUsuario);
+        if(usuario==null){
+            return  ResponseEntity.notFound().build();
+        }
+        List<Carro> carrosList = usuarioService.getAllCarros(idUsuario);
+        return ResponseEntity.ok(carrosList);
+    }
+
+    @GetMapping("/motos/{idUsuario}")
+    public ResponseEntity<List<Moto>> getMotos(@PathVariable("idUsuario") int idUsuario){
+        Usuario usuario = usuarioService.getUsuarioById(idUsuario);
+        if(usuario==null){
+            return  ResponseEntity.notFound().build();
+        }
+        List<Moto> motosList = usuarioService.getAllMotos(idUsuario);
+        return ResponseEntity.ok(motosList);
     }
 }
