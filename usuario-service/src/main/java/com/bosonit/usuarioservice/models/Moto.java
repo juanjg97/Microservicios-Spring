@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 public class Moto {
+    private int idUsuario;
     private String marca;
     private String modelo;
 }

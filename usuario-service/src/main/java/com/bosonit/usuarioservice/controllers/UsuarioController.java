@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.bosonit.usuarioservice.repositories.UsuarioRepository;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/usuario")
@@ -45,7 +46,7 @@ public class UsuarioController {
     }
     /*-----------------------------------------------------------------------*/
     //RestTemplate
-    @GetMapping("/carros/{idUsuario}")
+    @GetMapping("/g-carros-rt/{idUsuario}")
     public ResponseEntity<List<Carro>> getCarros(@PathVariable("idUsuario") int idUsuario){
         Usuario usuario = usuarioService.getUsuarioById(idUsuario);
         if(usuario==null){
@@ -55,7 +56,7 @@ public class UsuarioController {
         return ResponseEntity.ok(carrosList);
     }
 
-    @GetMapping("/motos/{idUsuario}")
+    @GetMapping("/g-motos-rt/{idUsuario}")
     public ResponseEntity<List<Moto>> getMotos(@PathVariable("idUsuario") int idUsuario){
         Usuario usuario = usuarioService.getUsuarioById(idUsuario);
         if(usuario==null){
@@ -64,4 +65,37 @@ public class UsuarioController {
         List<Moto> motosList = usuarioService.getAllMotos(idUsuario);
         return ResponseEntity.ok(motosList);
     }
+
+    /*-----------------------------------------------------------------------*/
+    //Feign Client
+    @PostMapping("/s-carro-cf")
+    public ResponseEntity<Carro> saveCarroWithFeig(@RequestBody Carro carro){
+
+        Carro nuevoCarro = usuarioService.saveCarroWithFeign(carro);
+        return ResponseEntity.ok(nuevoCarro);
+    }
+    @PostMapping("/s-moto-cf")
+    public ResponseEntity<Moto> saveMotoWithFeign(@RequestBody Moto moto){
+
+        Moto nuevaMoto = usuarioService.saveMotoWithFeign(moto);
+        return ResponseEntity.ok(nuevaMoto);
+    }
+
+    @GetMapping("/g-moto-cf/{idUsuario}")
+    public ResponseEntity<List<Moto>> getMotosWithFeign(@PathVariable("idUsuario") int idUsuario){
+        Usuario usuario = usuarioService.getUsuarioById(idUsuario);
+        if(usuario==null){
+            return  ResponseEntity.notFound().build();
+        }
+        List<Moto> motosList = usuarioService.getAllMotos(idUsuario);
+        return ResponseEntity.ok(motosList);
+    }
+
+    @GetMapping("/g-all-cf/{idUsuario}")
+    public ResponseEntity<Map<String, Object>> getAllVehicles(@PathVariable("idUsuario") int idUsuario){
+        Map<String,Object> allVehiclesList = usuarioService.getUsuarioAndVehiculos(idUsuario);
+        return ResponseEntity.ok(allVehiclesList);
+    }
+
+
 }
