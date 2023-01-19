@@ -17,7 +17,7 @@ public class CarroServiceImp {
     }
 
     public Carro getCarroById(int id_carro){
-        Carro carro = carroRepository.findById(id_carro).orElseThrow();
+        Carro carro = carroRepository.findById(id_carro).orElse(null);
         return carro;
     }
 

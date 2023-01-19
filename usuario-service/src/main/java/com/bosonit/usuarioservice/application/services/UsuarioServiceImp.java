@@ -22,7 +22,7 @@ public class UsuarioServiceImp {
     }
 
     public Usuario getUsuarioById(int id_usuario){
-        Usuario usuario = usuarioRepository.findById(id_usuario).orElseThrow();
+        Usuario usuario = usuarioRepository.findById(id_usuario).orElse(null);
         return usuario;
     }
 

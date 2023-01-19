@@ -13,9 +13,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="carro-service" target="19" />
-      <module name="moto-service" target="19" />
-      <module name="usuario-service" target="19" />
+      <module name="carro-service" target="1.8" />
+      <module name="moto-service" target="1.8" />
+      <module name="usuario-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

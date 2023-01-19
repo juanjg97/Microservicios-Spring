@@ -17,7 +17,7 @@ public class MotoServiceImp {
     }
 
     public Moto getMotoById(int idMoto){
-        Moto moto = motoRepository.findById(idMoto).orElseThrow();
+        Moto moto = motoRepository.findById(idMoto).orElse(null);
         return moto;
     }
 
